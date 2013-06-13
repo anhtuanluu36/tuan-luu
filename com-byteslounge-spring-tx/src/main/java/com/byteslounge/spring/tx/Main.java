@@ -18,7 +18,7 @@ public class Main
     	user.setName("John Doe");
     	
     	try{
-    		//testBean.testRequired(user);
+    		testBean.testRequired(user);
     	} catch(Exception e){
     		// catch exception raised from transaction rollback
     	}
