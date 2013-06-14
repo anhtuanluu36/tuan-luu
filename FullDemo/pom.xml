@@ -52,8 +52,35 @@
 			<version>${cglib.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-
-
+		
+		 <!-- MySQL database driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
+	 
+		<!-- Hibernate framework -->
+		<dependency>
+			<groupId>hibernate</groupId>
+			<artifactId>hibernate3</artifactId>
+			<version>3.2.3.GA</version>
+		</dependency>
+	 
+		<!-- Hibernate annotation -->
+		<dependency>
+			<groupId>hibernate-annotations</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.3.0.GA</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>com.springsource.org.junit</artifactId>
+			<version>4.7.0</version>
+			<scope>test</scope>
+		</dependency>
+	
 		<!-- Servlet Spec -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
