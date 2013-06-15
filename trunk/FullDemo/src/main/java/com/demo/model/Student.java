@@ -20,6 +20,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 /**
  * @author tuanla
@@ -61,8 +65,10 @@ public class Student {
 		this.birthday = birthday;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany
+	@Fetch(FetchMode.SELECT)
 	@JoinColumn(name="StudentID", referencedColumnName="StudentID")
+	@BatchSize(size = 10)
     public List<Fee> getFees() {
       return fees;
     }

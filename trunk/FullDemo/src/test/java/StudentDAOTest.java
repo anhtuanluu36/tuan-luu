@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.dao.StudentDAO;
 import com.demo.exception.CustomException;
+import com.demo.model.Fee;
 import com.demo.model.Student;
 
 
@@ -16,7 +17,12 @@ public class StudentDAOTest extends BaseTest {
   @Test
   public void findAllUser() {
       final List<Student> students = studentDAO.findAll();
-      System.out.println("UserDAOTest.findAllUser() " + students.size());
+      //System.out.println("UserDAOTest.findAllUser() " + students.size());
+      for (Student student : students) {
+        for (Fee fee : student.getFees()) {
+          System.out.println(fee.getFeeName());
+        }
+      }
   }
 
   //@Test
@@ -24,7 +30,10 @@ public class StudentDAOTest extends BaseTest {
       Student student;
       try {
         student = studentDAO.findByPrimaryKey(1);
-        System.out.println("StudentID: 1 - Fees: " + student);
+        System.out.println("StudentID: 1 - Fees: " + student.getFees().size());
+        for (Fee fee : student.getFees()) {
+          System.out.println(fee.getFeeName());
+        }
       } catch (CustomException e) {
         e.printStackTrace();
       }
