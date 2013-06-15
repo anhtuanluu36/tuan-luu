@@ -44,7 +44,18 @@
 	        <version>${spring.version}</version>
 	    </dependency>
 	    
-
+    	<dependency>
+	       <groupId>org.springframework</groupId>
+	       <artifactId>spring-test</artifactId>
+	       <version>${spring.version}</version>
+      	</dependency>
+	    
+	    <dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>com.springsource.org.junit</artifactId>
+			<version>4.7.0</version>
+		</dependency>
+	    
 		<!-- CGLib for @Configuration -->
 		<dependency>
 			<groupId>cglib</groupId>
@@ -100,6 +111,18 @@
 			<name>SpringSource Milestones Proxy</name>
 			<url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
 		</repository>
+		<repository>
+			<id>Nuxeo</id>
+			<name>Nuxeo Repository</name>
+			<url>https://maven.nuxeo.org/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		
 	</repositories>
 
 	<build>
