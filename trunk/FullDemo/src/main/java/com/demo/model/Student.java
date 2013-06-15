@@ -4,11 +4,20 @@
 package com.demo.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -23,6 +32,8 @@ public class Student {
 	private Integer studentId;
 	private String studentName;
 	private Date birthday;
+	private List<Fee> fees;
+//	private Set<Course> courses = new HashSet<Course>(0);
 	
 	@Id
 	@GeneratedValue
@@ -49,5 +60,31 @@ public class Student {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name="StudentID", referencedColumnName="StudentID")
+    public List<Fee> getFees() {
+      return fees;
+    }
+    public void setFees(List<Fee> fees) {
+      this.fees = fees;
+    }
+	
+	/*
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+	    name="Course_Student",
+	    joinColumns=@JoinColumn(name="StudentID"),
+	    inverseJoinColumns=@JoinColumn(name="CourseID")
+	)
+    public Set<Course> getCourses() {
+        return this.courses;
+    }
+	
+    public void setCourses(Set<Course> courses) {
+      this.courses = courses;
+    }*/
+	
+	
 }
 
