@@ -14,7 +14,7 @@ public class StudentDAOTest extends BaseTest {
   @Autowired
   StudentDAO studentDAO;
   
-  @Test
+  //@Test
   public void findAllUser() {
       final List<Student> students = studentDAO.findAll();
       //System.out.println("UserDAOTest.findAllUser() " + students.size());
@@ -25,7 +25,7 @@ public class StudentDAOTest extends BaseTest {
       }
   }
 
-  //@Test
+  @Test
   public void findByPrimaryKey() {
       Student student;
       try {
@@ -34,6 +34,7 @@ public class StudentDAOTest extends BaseTest {
         for (Fee fee : student.getFees()) {
           System.out.println(fee.getFeeName());
         }
+        System.out.println("StudentID: 1 - Course: " + student.getCourses().size());
       } catch (CustomException e) {
         e.printStackTrace();
       }

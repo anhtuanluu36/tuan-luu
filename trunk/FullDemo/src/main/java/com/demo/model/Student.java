@@ -4,9 +4,7 @@
 package com.demo.model;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,7 +35,7 @@ public class Student {
 	private String studentName;
 	private Date birthday;
 	private List<Fee> fees;
-//	private Set<Course> courses = new HashSet<Course>(0);
+	private List<Course> courses;
 	
 	@Id
 	@GeneratedValue
@@ -76,21 +74,18 @@ public class Student {
       this.fees = fees;
     }
 	
-	/*
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 	    name="Course_Student",
 	    joinColumns=@JoinColumn(name="StudentID"),
 	    inverseJoinColumns=@JoinColumn(name="CourseID")
 	)
-    public Set<Course> getCourses() {
+    public List<Course> getCourses() {
         return this.courses;
     }
 	
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(List<Course> courses) {
       this.courses = courses;
-    }*/
-	
-	
+    }
 }
 

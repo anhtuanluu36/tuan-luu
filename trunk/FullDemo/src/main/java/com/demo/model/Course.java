@@ -3,7 +3,6 @@
  */
 package com.demo.model;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -25,7 +24,7 @@ public class Course {
     
     private Integer courseId;
     private String courseName;
-    private Date birthday;
+    private List<Student> students;
     
     @Id
     @GeneratedValue
@@ -45,12 +44,12 @@ public class Course {
         this.courseName = courseName;
     }
     
-    @Column(name = "Birthday")
-    public Date getBirthday() {
-        return birthday;
+    @ManyToMany(fetch=FetchType.LAZY,mappedBy="courses")
+    public List<Student> getStudents() {
+      return students;
     }
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }  
+    public void setStudents(List<Student> students) {
+      this.students = students;
+    }
 }
 
