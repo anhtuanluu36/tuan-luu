@@ -8,10 +8,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.dao.StudentDAO;
+import com.demo.exception.CustomException;
 import com.demo.model.Student;
 import com.demo.service.StudentService;
 
-@Service
+@Service("studentService")
 @Transactional(propagation=Propagation.SUPPORTS,rollbackFor=Exception.class)
 public class StudentServiceImpl implements StudentService {
 
@@ -35,13 +36,11 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public List<Student> findAll(int firstResult, int pageSize) {
-    // TODO Auto-generated method stub
-    return null;
+    return studentDAO.findAll(firstResult, pageSize);
   }
 
   @Override
-  public Student findByPrimaryKey(int studentId) {
-    // TODO Auto-generated method stub
-    return null;
+  public Student findByPrimaryKey(int studentId) throws CustomException {
+    return studentDAO.findByPrimaryKey(studentId);
   }
 }

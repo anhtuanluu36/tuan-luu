@@ -3,7 +3,7 @@
  */
 package com.demo.dao;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.demo.model.Student;
 
@@ -12,8 +12,7 @@ import com.demo.model.Student;
  * @author tuanla
  *
  */
-
-@Repository
+@Component
 public class StudentDAO extends AbstractDAO<Student> {
 	
 }

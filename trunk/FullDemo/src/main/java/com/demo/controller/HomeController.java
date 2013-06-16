@@ -20,8 +20,8 @@ public class HomeController {
     
 	@RequestMapping(value="/list")
 	public ModelAndView test(HttpServletResponse response) throws IOException{
-	    ModelAndView model = new ModelAndView("demo.student.list");
+	    ModelAndView model = new ModelAndView("home");
 	    model.addObject("students", studentService.findAll());
-		return new ModelAndView("home");
+		return model;
 	}
 }

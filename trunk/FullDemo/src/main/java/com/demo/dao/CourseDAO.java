@@ -3,12 +3,12 @@ package com.demo.dao;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.demo.model.Course;
 import com.demo.model.CourseStudentTotal;
 
-@Repository
+@Component
 public class CourseDAO extends AbstractDAO<Course> {
 
   @SuppressWarnings("unchecked")
