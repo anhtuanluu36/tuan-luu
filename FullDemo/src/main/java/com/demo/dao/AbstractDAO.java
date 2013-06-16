@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.exception.CustomException;
 
-public class AbstractDAO<E> {
+public abstract class AbstractDAO<E> {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
