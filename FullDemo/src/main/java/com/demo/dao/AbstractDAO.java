@@ -52,4 +52,8 @@ public class AbstractDAO<E> {
 	public E findByPrimaryKey(Integer id) throws CustomException {
 	    return (E) sessionFactory.getCurrentSession().load(persistentClass, id);
 	}
+
+    protected SessionFactory getSessionFactory() {
+      return sessionFactory;
+    }
 }
