@@ -6,9 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.demo.model.Student;
 import com.demo.service.StudentService;
 
 @Controller
@@ -19,9 +22,16 @@ public class HomeController {
     StudentService studentService;
     
 	@RequestMapping(value="/list")
-	public ModelAndView test(HttpServletResponse response) throws IOException{
+	public ModelAndView findAll(HttpServletResponse response) throws Exception{
 	    ModelAndView model = new ModelAndView("home");
 	    model.addObject("students", studentService.findAll());
 		return model;
 	}
+	
+	@RequestMapping(value="/ajax/list")
+	@ResponseBody
+    public Student find(@RequestBody Student student, HttpServletResponse response) throws Exception{
+	    throw new Exception("avcac");
+        //return student;
+    }
 }
