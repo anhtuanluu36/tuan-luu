@@ -17,6 +17,7 @@
 		<hibernate.version>3.6.3.Final</hibernate.version>
 		<mysql.version>5.1.9</mysql.version>
 		<log4j.version>1.5.10</log4j.version>
+		<jackson.version>1.9.10</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -113,6 +114,13 @@
 	        <version>${hibernate.version}</version>
     	</dependency>
     	
+    	<!-- Hibernate Validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
+		</dependency>
+    	
     	<!-- C3P0 Connection Pool -->
     	<dependency>
 			<groupId>c3p0</groupId>
@@ -142,6 +150,13 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${log4j.version}</version>
+		</dependency>
+		
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
 		</dependency> 				
 	</dependencies>
 
