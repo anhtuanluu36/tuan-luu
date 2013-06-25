@@ -41,6 +41,8 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public Student findByPrimaryKey(int studentId) throws CustomException {
-    return studentDAO.findByPrimaryKey(studentId);
+    Student student = studentDAO.findByPrimaryKey(studentId);
+    System.out.println(student.getStudentName());
+    return student;
   }
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.demo.exception.CustomException;
 import com.demo.message.ResponseMessage;
 import com.demo.model.Student;
 import com.demo.service.StudentService;
@@ -64,7 +66,7 @@ public class HomeController {
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelAndView save(@Valid @ModelAttribute Student student, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView save(@Valid @ModelAttribute Student student, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws CustomException {
       ModelAndView model = new ModelAndView("home");
       
       if (bindingResult.hasErrors()) {
@@ -77,10 +79,16 @@ public class HomeController {
         model.addObject("errors", bindingResult.getAllErrors());
         return model;
       }
-      
+      student = new Student();
+      student.setStudentName("asdd");
+      student.setBirthday(new Date());
+      //student.setVersion(1l);
+      studentService.saveOrUpdate(student);
       model.addObject("students", studentService.findAll());
       return model;
     }
+    
+    
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

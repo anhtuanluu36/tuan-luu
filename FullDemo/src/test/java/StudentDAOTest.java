@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class StudentDAOTest extends BaseTest {
       }
   }
 
-  @Test
+  //@Test
   public void findByPrimaryKey() {
       Student student;
       try {
@@ -38,5 +39,23 @@ public class StudentDAOTest extends BaseTest {
       } catch (CustomException e) {
         e.printStackTrace();
       }
+  }
+  
+  //@Test
+  public void save() throws CustomException {
+      Student student = new Student();
+      student.setStudentName("111");
+      student.setBirthday(new Date());
+      studentDAO.saveOrUpdate(student);
+      System.out.println("successful!");
+  }
+  
+  @Test
+  public void saveOrUpdate() throws CustomException {
+      Student student = studentDAO.findByPrimaryKey(3);
+      student.setStudentName("111");
+      student.setBirthday(new Date());
+      studentDAO.saveOrUpdate(student);
+      System.out.println("successful!");
   }
 }
