@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -36,6 +37,8 @@ public class Student {
 	private Date birthday;
 	private List<Fee> fees;
 	private List<Course> courses;
+	
+	private Long version;
 	
 	@Id
 	@GeneratedValue
@@ -86,6 +89,16 @@ public class Student {
 	
     public void setCourses(List<Course> courses) {
       this.courses = courses;
+    }
+
+    @Version
+    public Long getVersion() {
+      return version;
+    }
+    
+    @SuppressWarnings("unused")
+    private void setVersion(Long version) {
+      this.version = version;
     }
 }
 
