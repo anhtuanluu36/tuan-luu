@@ -1,2 +1,0 @@
-http://sourcemaking.com/design_patterns/chain_of_responsibility
-http://www.tutorialspoint.com/design_pattern/chain_of_responsibility_pattern.htm
