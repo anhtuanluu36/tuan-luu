@@ -9,8 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -27,7 +29,8 @@ public class Course {
     private List<Student> students;
     
     @Id
-    @GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_course_course_id")
+	@SequenceGenerator(name="seq_course_course_id", sequenceName="seq_course_course_id")
     @Column(name = "CourseID") 
     public Integer getCourseId() {
         return courseId;

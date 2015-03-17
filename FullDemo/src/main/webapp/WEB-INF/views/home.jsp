@@ -9,7 +9,7 @@
  		$.ajax({
  		    type: "post",
  		    url: "ajax/list1", //your valid url
- 		    contentType: "application/json", //this is required for spring 3 - ajax to work (at least for me)
+ 		    contentType: "application/json", //this is required for spring 3 - ajax to work
  		   	dataType: 'json',
  		    data: JSON.stringify(data), //json object or array of json objects
  		    success: function(result) {

@@ -53,6 +53,6 @@
 	</session-config>
 	
     <welcome-file-list>  
-        <welcome-file>index.jsp</welcome-file>  
+        <welcome-file>/student/list</welcome-file>  
     </welcome-file-list>
 </web-app>

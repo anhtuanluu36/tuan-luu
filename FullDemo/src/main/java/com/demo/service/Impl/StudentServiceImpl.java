@@ -12,7 +12,7 @@ import com.demo.exception.CustomException;
 import com.demo.model.Student;
 import com.demo.service.StudentService;
 
-@Service("studentService")
+@Service
 @Transactional(propagation=Propagation.SUPPORTS,rollbackFor=Exception.class)
 public class StudentServiceImpl implements StudentService {
 

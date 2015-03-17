@@ -12,13 +12,35 @@
 
 	<properties>
 		<java.version>1.6</java.version>
-		<spring.version>3.2.2.RELEASE</spring.version>
+		<spring.version>3.2.8.RELEASE</spring.version>
 		<cglib.version>2.2.2</cglib.version>
 		<hibernate.version>3.6.3.Final</hibernate.version>
 		<mysql.version>5.1.9</mysql.version>
 		<log4j.version>1.5.10</log4j.version>
 		<jackson.version>1.9.10</jackson.version>
+		<mockito.version>1.9.5</mockito.version>
 	</properties>
+	
+	<profiles>
+        <profile>
+            <id>db2</id>
+            <properties>
+	          	<driver>com.ibm.db2.jcc.DB2Driver</driver>
+	          	<url>jdbc:db2://localhost:50001/school</url>
+	          	<username>transfv1</username>
+	          	<password>D0nR1ver</password>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+	          	<driver>com.mysql.jdbc.Driver</driver>
+	          	<url>jdbc:db2://localhost:3306/school</url>
+	          	<username>root</username>
+	          	<password>123456</password>
+            </properties>
+        </profile>
+    </profiles>
 
 	<dependencies>
 		<!-- Spring core & mvc -->
@@ -59,9 +81,9 @@
       	</dependency>
 	    
 	    <dependency>
-			<groupId>org.junit</groupId>
-			<artifactId>com.springsource.org.junit</artifactId>
-			<version>4.7.0</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
 		</dependency>
 		
 		<dependency>
@@ -100,12 +122,20 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		 <!-- MySQL database driver -->
+		 <!-- MySQL database driver
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
+		-->
+		
+		<!-- DB2 database driver -->
+		<dependency>
+            <groupId>external.ibm.jdbc</groupId>
+            <artifactId>db2jcc.jar</artifactId>
+            <version>1.0</version>
+        </dependency>
 	 
 		<!-- Hibernate framework -->
 	    <dependency>
@@ -157,7 +187,13 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${jackson.version}</version>
-		</dependency> 				
+		</dependency> 
+		
+		<dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>				
 	</dependencies>
 
 	<repositories>
@@ -192,6 +228,17 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+		        <groupId>org.liquibase</groupId>
+		        <artifactId>liquibase-maven-plugin</artifactId>
+		        <configuration>
+		          <changeLogFile>${basedir}/sqlscript/create-table.xml</changeLogFile>
+		          <driver>${driver}</driver>
+		          <url>${url}</url>
+		          <username>${username}</username>
+		          <password>${password}</password>
+		        </configuration>
+		    </plugin>
 		</plugins>
 	</build>
 </project>
