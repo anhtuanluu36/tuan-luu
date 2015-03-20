@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="1" author="tuan.luu">
+		<createTable tableName="Student">
+			<column name="StudentID" type="int(10)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="StudentName" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="Birthday" type="date" />
+			<column name="Version" type="int" />
+		</createTable>
+		<createTable tableName="Course">
+			<column name="CourseID" type="int(10)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="CourseName" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="StartDate" type="date" />
+			<column name="EndDate" type="date" />
+		</createTable>
+
+		<createTable tableName="Course_Student">
+			<column name="CourseID" type="int(10)">
+				<constraints nullable="false" />
+			</column>
+			<column name="StudentID" type="int(10)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createTable tableName="Fee">
+			<column name="FeeID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="FeeName" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="StudentID" type="int(10)" />
+			<column name="Price" type="bigint" />
+		</createTable>
+		
+		<createTable tableName="User">
+			<column name="UserID" type="int">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="UserName" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="Password" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="Role" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="Version" type="int" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="2" author="tuan.luu">
+		<addPrimaryKey columnNames="CourseID, StudentID"
+			constraintName="pk_course_student" tableName="Course_Student" />
+		<addForeignKeyConstraint baseColumnNames="CourseID"
+			baseTableName="Course_Student" constraintName="fk_course_student_courseid"
+			referencedColumnNames="CourseID" referencedTableName="Course" />
+
+		<addForeignKeyConstraint baseColumnNames="StudentID"
+			baseTableName="Course_Student" constraintName="fk_course_student_studentid"
+			referencedColumnNames="StudentID" referencedTableName="Student" />
+
+		<addForeignKeyConstraint baseColumnNames="StudentID"
+			baseTableName="Fee" constraintName="fk_fee_studentid"
+			referencedColumnNames="StudentID" referencedTableName="Student" />
+
+		<createSequence cycle="true" incrementBy="1" maxValue="1000"
+			minValue="1" sequenceName="seq_student_student_id"
+			startValue="1" />
+		
+		<createSequence cycle="true" incrementBy="1" maxValue="1000"
+			minValue="1" sequenceName="seq_course_course_id"
+			startValue="1" />
+			
+		<createSequence cycle="true" incrementBy="1" maxValue="1000"
+			minValue="1" sequenceName="seq_fee_fee_id"
+			startValue="1" />
+	</changeSet>
+
+	<changeSet id="3" author="tuan.luu">
+		<insert tableName="Student">
+			<column name="StudentID" value="1" />
+			<column name="StudentName" value="Tuan" />
+			<column name="Birthday" value="12/3/1990" />
+			<column name="Version" value="0" />
+		</insert>
+		<insert tableName="User">
+			<column name="UserID" value="1" />
+			<column name="UserName" value="admin" />
+			<column name="Password" value="admin" />
+			<column name="Role" value="admin" />
+			<column name="Version" value="0" />
+		</insert>
+		<insert tableName="User">
+			<column name="UserID" value="2" />
+			<column name="UserName" value="user" />
+			<column name="Password" value="user" />
+			<column name="Role" value="user" />
+			<column name="Version" value="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>
