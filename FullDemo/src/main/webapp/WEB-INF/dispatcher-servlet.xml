@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
        http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	   http://www.springframework.org/schema/context 
@@ -12,43 +10,68 @@
 	   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
 	<context:component-scan base-package="com.demo" />
-	<mvc:annotation-driven/>
-	<!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-    
-       	
-   	<!-- bean id="jspViewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/jsp/"
-          p:suffix=".jsp" 
-    -->	
-          
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
-		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
-		<property name="order" value="0" /> </bean> <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
-		<property name="definitions"> <list> <value>/WEB-INF/tiles.xml</value> </list> 
-		</property> 
-	</bean>           
+	<mvc:annotation-driven />
+	<!-- Use this post processor to translate any MongoExceptions thrown in 
+		@Repository annotated classes -->
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
 	
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
-		  <list>
-		    <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
-		  </list>
+	<!-- bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" -->
+
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+	
+	<mvc:view-controller path="/" view-name="/resources/html/templates/index.html"/>
+	
+	<!-- using this for Apache Tiles
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles2.TilesView" />
+		<property name="order" value="0" />
+	</bean>
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
 		</property>
 	</bean>
 
-<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-    <property name="favorPathExtension" value="true" />
-    <property name="ignoreAcceptHeader" value="true" />
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
 
-    <property name="mediaTypes">
-        <map>
-            <entry key="json" value="application/json"/>
-            <entry key="html" value="text/html"/>
-        </map>
-    </property>
-</bean>
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="favorPathExtension" value="true" />
+		<property name="ignoreAcceptHeader" value="true" />
+
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="html" value="text/html" />
+			</map>
+		</property>
+	</bean>
+	-->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
 	<import resource="/dao-context.xml" />
-	
+	<import resource="/security-context-config.xml"/>
 </beans>

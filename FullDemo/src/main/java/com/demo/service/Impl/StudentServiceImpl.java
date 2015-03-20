@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.demo.converter.StudentConverter;
 import com.demo.dao.StudentDAO;
+import com.demo.dto.StudentDTO;
 import com.demo.exception.CustomException;
 import com.demo.model.Student;
 import com.demo.service.StudentService;
@@ -25,12 +27,20 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
-  public void saveOrUpdate(Student student) {
+  public void saveOrUpdate(StudentDTO studentDTO) throws CustomException {
+	Student student = null;
+	if (studentDTO.getStudentId() != null) {
+		student = studentDAO.findByPrimaryKey(studentDTO.getStudentId());
+		StudentConverter.mergeToEntity(student, studentDTO);
+	} else {
+		student = StudentConverter.convertToEntity(studentDTO);
+	}
     studentDAO.saveOrUpdate(student);
   }
 
   @Override
-  public void delete(Student student) {
+  public void delete(int studentId) throws CustomException {
+	Student student = studentDAO.findByPrimaryKey(studentId);
     studentDAO.delete(student);
   }
 
@@ -42,7 +52,6 @@ public class StudentServiceImpl implements StudentService {
   @Override
   public Student findByPrimaryKey(int studentId) throws CustomException {
     Student student = studentDAO.findByPrimaryKey(studentId);
-    System.out.println(student.getStudentName());
     return student;
   }
 }

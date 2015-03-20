@@ -5,14 +5,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.demo.model.Student;
+import com.demo.dto.StudentDTO;
 
 @Component
 public class StudentValidator implements Validator{
 
   @Override
   public boolean supports(Class<?> clazz) {
-    return Student.class.isAssignableFrom(clazz);   
+    return StudentDTO.class.isAssignableFrom(clazz);   
   }
 
   @Override

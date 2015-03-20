@@ -9,9 +9,14 @@
 		<put-attribute name="mainBody" value="" />
 	</definition>
 
-	<definition name="home" extends="mainLayout">
+	<definition name="page.home" extends="mainLayout">
 		<put-attribute name="navigation" value="" />
 		<put-attribute name="mainBody" value="/WEB-INF/views/home.jsp" />
+	</definition>
+	
+	<definition name="page.error" extends="mainLayout">
+		<put-attribute name="navigation" value="" />
+		<put-attribute name="mainBody" value="/WEB-INF/views/error/error.jsp" />
 	</definition>
 
 </tiles-definitions>

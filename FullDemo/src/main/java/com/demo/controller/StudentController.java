@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.demo.converter.StudentConverter;
+import com.demo.dto.StudentDTO;
 import com.demo.exception.CustomException;
 import com.demo.message.ResponseMessage;
 import com.demo.model.Student;
@@ -42,17 +46,19 @@ public class StudentController {
     @Autowired
     StudentValidator validator;
     
+    @PreAuthorize("isAuthenticated()")
 	@RequestMapping(value="/list")
-	public ModelAndView findAll(HttpServletResponse response) throws Exception{
-	    ModelAndView model = new ModelAndView("home");
-	    model.addObject("students", studentService.findAll());
+	public ModelAndView showStudentListPage(HttpServletResponse response) throws Exception{
+	    ModelAndView model = new ModelAndView("page.home");
+	    model.addObject("students", findAll());
 		return model;
 	}
 	
-	@RequestMapping(value="/ajax/list", produces = "application/json;charset=UTF-8")
+    @PreAuthorize("isAuthenticated()")
+	@RequestMapping(value="/ajax/list", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-    public Student find(@RequestBody Student student, BindingResult errors, HttpServletResponse response) throws Exception{
-        return student;
+    public List<StudentDTO> findAll() throws Exception{
+        return StudentConverter.convertToDTOs(studentService.findAll());
     }
 	
     @RequestMapping(value = "/ajax/list1", produces = "application/json;charset=UTF-8")
@@ -63,11 +69,14 @@ public class StudentController {
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelAndView save(@Valid @ModelAttribute Student student, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws CustomException {
-      ModelAndView model = new ModelAndView("home");
+    public ModelAndView save(@Valid @ModelAttribute StudentDTO studentDTO, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws CustomException {
+      ModelAndView model = new ModelAndView("page.home");
       
+      if ("error".equals(studentDTO.getStudentName())) {
+    	  throw new CustomException("Test @ExceptionHandler");
+      }
       if (bindingResult.hasErrors()) {
-        model = new ModelAndView("home");
+        model = new ModelAndView("page.home");
         List<FieldError> errors = bindingResult.getFieldErrors();
         StringBuffer customMessage = new StringBuffer();
         for (FieldError error : errors ) {
@@ -76,13 +85,37 @@ public class StudentController {
         model.addObject("errors", bindingResult.getAllErrors());
         return model;
       }
-      student = new Student();
-      student.setStudentName("asdd");
-      student.setBirthday(new Date());
-      //student.setVersion(1l);
-      studentService.saveOrUpdate(student);
+      studentDTO.setBirthday(new Date());
+      studentService.saveOrUpdate(studentDTO);
       model.addObject("students", studentService.findAll());
       return model;
+    }
+    
+    @RequestMapping(value = "/delete/{studentId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseMessage delete(@PathVariable Integer studentId) throws CustomException {
+      if (studentId == null) {
+    	  return new ResponseMessage("error", "student id must be required", studentId);
+      }
+      studentService.delete(studentId);
+      return new ResponseMessage("success", "Deleted successfully!", studentId);
+    }
+    
+    
+    @RequestMapping(value = "/save-ajax", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public ResponseMessage saveAjax(@Valid @RequestBody StudentDTO studentDTO, BindingResult bindingResult) throws Exception {
+        
+        if (bindingResult.hasErrors()) {
+          List<FieldError> errors = bindingResult.getFieldErrors();
+          StringBuffer customMessage = new StringBuffer();
+          for (FieldError error : errors ) {
+              customMessage.append(error.getObjectName() +"." + error.getField() +" "+ error.getCode()+"\n");
+          }        
+          return new ResponseMessage("error", customMessage.toString(), studentDTO);
+        }
+        studentService.saveOrUpdate(studentDTO);
+        return new ResponseMessage("success", "Save successfully!", studentDTO);
     }
     
     
@@ -99,8 +132,17 @@ public class StudentController {
         }        
         return customMessage.toString();
     }
+    
+    @ExceptionHandler(CustomException.class)
+    public ModelAndView handleCustomException(CustomException ex) {
+    	 
+		ModelAndView model = new ModelAndView("page.error");
+		model.addObject("exception", ex);
+		return model;
+ 
+	}
 	
-	@InitBinder
+	@InitBinder(value = "studentDTO")
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
