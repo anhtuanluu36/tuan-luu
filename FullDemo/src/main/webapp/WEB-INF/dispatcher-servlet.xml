@@ -17,12 +17,14 @@
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 	
-	<!-- bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
-		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" -->
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+		p:prefix="/WEB-INF/html/public/" p:suffix=".jsp">
+	</bean>
 
-	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
-	
-	<mvc:view-controller path="/" view-name="/resources/html/templates/index.html"/>
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/html/resources/" />
+	<mvc:resources mapping="/html/*"  location="/WEB-INF/html/public/" />
+	<mvc:resources mapping="/partials/**"  location="/WEB-INF/html/partials/" />
+	<mvc:view-controller path="/" view-name="/index"/>
 	
 	<!-- using this for Apache Tiles
 	<bean id="viewResolver"

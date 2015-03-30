@@ -90,6 +90,10 @@
 		<createSequence cycle="true" incrementBy="1" maxValue="1000"
 			minValue="1" sequenceName="seq_fee_fee_id"
 			startValue="1" />
+			
+		<createSequence cycle="true" incrementBy="1" maxValue="1000"
+			minValue="1" sequenceName="seq_user_user_id"
+			startValue="1" />
 	</changeSet>
 
 	<changeSet id="3" author="tuan.luu">

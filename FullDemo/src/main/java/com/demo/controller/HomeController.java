@@ -7,9 +7,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 	
-	/*@RequestMapping(value="/")
-	public ModelAndView redirectToHomePage() {
-		return new ModelAndView("redirect:/student/list");
-	}*/
+	@RequestMapping("/login")
+	public ModelAndView showLoginPage() {
+		ModelAndView modelAndView = new ModelAndView("index");
+		modelAndView.addObject("successmessage", "ABC successfully");
+		return modelAndView;
+	}
 
 }
